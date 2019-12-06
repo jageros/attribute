@@ -1,7 +1,7 @@
 package mongo
 
 import (
-	"github.com/jager/attribute/timer"
+	"github.com/jageros/attribute/timer"
 	"gopkg.in/mgo.v2"
 	"gopkg.in/mgo.v2/bson"
 	"io"

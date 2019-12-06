@@ -1,4 +1,4 @@
-module github.com/jager/attribute
+module github.com/jageros/attribute
 
 go 1.13
 

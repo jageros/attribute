@@ -1,8 +1,8 @@
 package main
 
 import (
-	"github.com/jager/attribute"
-	"github.com/jager/attribute/example/conf"
+	"github.com/jageros/attribute"
+	"github.com/jageros/attribute/example/conf"
 	"time"
 )
 

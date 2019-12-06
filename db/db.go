@@ -2,9 +2,9 @@ package db
 
 import (
 	"fmt"
-	"github.com/jager/attribute/db/mongo"
-	"github.com/jager/attribute/evq"
-	"github.com/jager/attribute/opmon"
+	"github.com/jageros/attribute/db/mongo"
+	"github.com/jageros/attribute/evq"
+	"github.com/jageros/attribute/opmon"
 	"github.com/xiaonanln/go-xnsyncutil/xnsyncutil"
 	"log"
 	"sync"

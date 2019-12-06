@@ -2,8 +2,8 @@ package evq
 
 import (
 	"fmt"
-	"github.com/jager/attribute/consts"
-	"github.com/jager/attribute/utils"
+	"github.com/jageros/attribute/consts"
+	"github.com/jageros/attribute/utils"
 	"gopkg.in/eapache/queue.v1"
 	"log"
 	"strconv"

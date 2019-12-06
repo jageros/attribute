@@ -1,0 +1,1 @@
+# Attribute for MongoDB in golang

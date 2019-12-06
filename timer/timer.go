@@ -1,9 +1,9 @@
 package timer
 
 import (
-	"attribute/consts"
-	"attribute/evq"
 	"container/heap"
+	"github.com/jager/attribute/consts"
+	"github.com/jager/attribute/evq"
 	"math"
 	"sync"
 	"time"

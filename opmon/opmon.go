@@ -1,10 +1,10 @@
 package opmon
 
 import (
-	"attribute/utils"
 	"bytes"
 	"encoding/json"
 	"fmt"
+	"github.com/jager/attribute/utils"
 	"log"
 	"net/http"
 	"sync"

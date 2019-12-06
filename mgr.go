@@ -1,9 +1,9 @@
 package attribute
 
 import (
-	"attribute/db"
-	"attribute/evq"
 	"errors"
+	"github.com/jager/attribute/db"
+	"github.com/jager/attribute/evq"
 )
 
 var NotExistsErr = errors.New("NotExistsErr")

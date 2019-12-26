@@ -4,6 +4,8 @@ import (
 	"errors"
 	"github.com/jageros/attribute/db"
 	"github.com/jageros/attribute/evq"
+	"github.com/jageros/attribute/timer"
+	"time"
 )
 
 var NotExistsErr = errors.New("NotExistsErr")
@@ -96,6 +98,7 @@ func Start(iDb db.IDbConfig) {
 	DbConfigCreator = func(args ...interface{}) db.IDbConfig {
 		return iDb
 	}
+	timer.StartTicks(time.Second)
 }
 
 func Stop() {

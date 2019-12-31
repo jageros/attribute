@@ -1,10 +1,10 @@
-package attribute
+package attr
 
 import (
 	"errors"
-	"github.com/jageros/attribute/db"
-	"github.com/jageros/attribute/evq"
-	"github.com/jageros/attribute/timer"
+	"github.com/jageros/attribute/internal/pkg/db"
+	"github.com/jageros/attribute/internal/pkg/evq"
+	"github.com/jageros/attribute/internal/pkg/timer"
 	"time"
 )
 
@@ -102,6 +102,7 @@ func Start(iDb db.IDbConfig) {
 }
 
 func Stop() {
+	timer.StartTicks(time.Millisecond * 500)
 	evq.Stop()
 	db.Shutdown()
 }

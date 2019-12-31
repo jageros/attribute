@@ -4,7 +4,7 @@ import (
 	"bytes"
 	"encoding/json"
 	"fmt"
-	"github.com/jageros/attribute/utils"
+	"github.com/jageros/attribute/internal/pkg/utils"
 	"log"
 	"net/http"
 	"sync"

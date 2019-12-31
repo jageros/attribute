@@ -2,8 +2,8 @@ package timer
 
 import (
 	"container/heap"
-	"github.com/jageros/attribute/consts"
-	"github.com/jageros/attribute/evq"
+	"github.com/jageros/attribute/internal/pkg/consts"
+	"github.com/jageros/attribute/internal/pkg/evq"
 	"math"
 	"sync"
 	"time"

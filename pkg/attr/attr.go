@@ -1,4 +1,4 @@
-package attribute
+package attr
 
 type iAttr interface {
 	SetDirty(val bool)

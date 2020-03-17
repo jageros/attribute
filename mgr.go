@@ -98,11 +98,10 @@ func Start(iDb db.IDbConfig) {
 	DbConfigCreator = func(args ...interface{}) db.IDbConfig {
 		return iDb
 	}
-	timer.StartTicks(time.Second)
+	timer.StartTicks(time.Millisecond * 500)
 }
 
 func Stop() {
-	timer.StartTicks(time.Millisecond * 500)
 	evq.Stop()
 	db.Shutdown()
 }

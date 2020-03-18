@@ -4,8 +4,6 @@ import (
 	"errors"
 	"github.com/jageros/attribute/internal/pkg/db"
 	"github.com/jageros/attribute/internal/pkg/evq"
-	"github.com/jageros/attribute/internal/pkg/timer"
-	"time"
 )
 
 var NotExistsErr = errors.New("NotExistsErr")
@@ -94,11 +92,10 @@ func ForEach(attrName string, callback func(*AttrMgr), args ...interface{}) {
 	})
 }
 
-func Start(iDb db.IDbConfig) {
+func ConfigMongoDB(iDb db.IDbConfig) {
 	DbConfigCreator = func(args ...interface{}) db.IDbConfig {
 		return iDb
 	}
-	timer.StartTicks(time.Millisecond * 500)
 }
 
 func Stop() {

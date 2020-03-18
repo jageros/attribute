@@ -256,4 +256,5 @@ func onTimer(ev evq.IEvent) {
 func init() {
 	heap.Init(&tHeap)
 	evq.HandleEvent(consts.TIMER_EVENT, onTimer)
+	StartTicks(time.Millisecond * 500)
 }

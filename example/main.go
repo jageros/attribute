@@ -3,11 +3,12 @@ package main
 import (
 	"github.com/jageros/attribute"
 	"github.com/jageros/attribute/example/conf"
+	"log"
 	"time"
 )
 
 func main() {
-	attribute.Start(conf.GetDBCfg())
+	attribute.ConfigMongoDB(conf.GetDBCfg())
 	attr := attribute.NewAttrMgr("actor", 1)
 	attr.SetStr("name", "jager")
 	mAttr := attr.GetMapAttr("msg")
@@ -21,7 +22,12 @@ func main() {
 	mAttr.SetStr("email", "lhj168os@gmail.com")
 	mAttr.SetStr("github", "https://github.com/jageros")
 	mAttr.SetStr("blog", "https://blog.csdn.net/lhj_168")
-	attr.Save(false)
+	err := attr.Save(true)
+	if err != nil {
+		log.Printf("MongoDB save error: %v", err)
+	}else {
+		log.Printf("MongoDB save successful !")
+	}
 	//attr.Load()
 	//log.Printf("attr=%+v", attr)
 

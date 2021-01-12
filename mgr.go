@@ -2,8 +2,7 @@ package attribute
 
 import (
 	"errors"
-	"github.com/jageros/attribute/internal/pkg/db"
-	"github.com/jageros/attribute/internal/pkg/evq"
+	"github.com/jageros/db"
 )
 
 var NotExistsErr = errors.New("NotExistsErr")
@@ -29,6 +28,19 @@ func NewAttrMgr(name string, id interface{}, args ...interface{}) *AttrMgr {
 
 func (a *AttrMgr) Load(isSync ...interface{}) error {
 	if data, err := a.dbClient.Load(a.name, a.id, isSync...); err != nil {
+		return err
+	} else {
+		if data == nil {
+			return NotExistsErr
+		}
+		a.AssignMap(data)
+		a.SetDirty(false)
+		return nil
+	}
+}
+
+func (a *AttrMgr) Copy(id interface{}, isSync ...interface{}) error {
+	if data, err := a.dbClient.Load(a.name, id, isSync...); err != nil {
 		return err
 	} else {
 		if data == nil {
@@ -92,13 +104,12 @@ func ForEach(attrName string, callback func(*AttrMgr), args ...interface{}) {
 	})
 }
 
-func ConfigMongoDB(iDb db.IDbConfig) {
+func Start(iDb db.IDbConfig) {
 	DbConfigCreator = func(args ...interface{}) db.IDbConfig {
 		return iDb
 	}
 }
 
 func Stop() {
-	evq.Stop()
 	db.Shutdown()
 }

@@ -230,6 +230,16 @@ func (a *ListAttr) DelUint32(val uint32) int {
 	return -1
 }
 
+func (a *ListAttr) DelStr(val string) int {
+	for i, _ := range a.items {
+		if a.GetStr(i) == val {
+			a.DelByIndex(i)
+			return i
+		}
+	}
+	return -1
+}
+
 func (a *ListAttr) DelMapAttr(val *MapAttr) int {
 	for i, _ := range a.items {
 		if a.GetMapAttr(i) == val {
@@ -401,6 +411,18 @@ func (a *ListAttr) ForOrderEachIndex(order bool, num int, f func(index int) bool
 			if !f(i) {
 				break
 			}
+		}
+	}
+}
+
+func (a *ListAttr) ForIntervalIndex(startIndex, endIndex int, f func(index int) bool) {
+	l := len(a.items)
+	if endIndex > l {
+		endIndex = l
+	}
+	for i := startIndex; i < endIndex; i++ {
+		if !f(i) {
+			break
 		}
 	}
 }

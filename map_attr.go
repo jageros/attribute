@@ -70,9 +70,11 @@ func (a *MapAttr) Keys() []string {
 	return keys
 }
 
-func (a *MapAttr) ForEachKey(f func(key string)) {
+func (a *MapAttr) ForEachKey(f func(key string) bool) {
 	for k, _ := range a.attrs {
-		f(k)
+		if !f(k) {
+			return
+		}
 	}
 }
 
@@ -189,8 +191,23 @@ func (a *MapAttr) GetInt(key string) int {
 	if val == nil {
 		return 0
 	} else {
-		return val.(int)
+		if v, ok := val.(int); ok {
+			return v
+		}
+		if v, ok := val.(int32); ok {
+			return int(v)
+		}
+		if v, ok := val.(int64); ok {
+			return int(v)
+		}
+		if v, ok := val.(uint32); ok {
+			return int(v)
+		}
+		if v, ok := val.(uint64); ok {
+			return int(v)
+		}
 	}
+	return 0
 }
 
 func (a *MapAttr) GetUInt64(key string) uint64 {

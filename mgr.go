@@ -3,12 +3,12 @@ package attribute
 import (
 	"errors"
 	"github.com/jageros/db"
+	"github.com/jageros/group"
 )
 
 var NotExistsErr = errors.New("NotExistsErr")
 
-// args[0]: isGlobal(bool), args[1]: region(uint32)
-var DbConfigCreator func(args ...interface{}) db.IDbConfig
+var DbConfigCreator db.IDbConfig
 
 type AttrMgr struct {
 	*MapAttr
@@ -17,12 +17,12 @@ type AttrMgr struct {
 	id       interface{}
 }
 
-func NewAttrMgr(name string, id interface{}, args ...interface{}) *AttrMgr {
+func NewAttrMgr(name string, id interface{}) *AttrMgr {
 	return &AttrMgr{
 		name:     name,
 		id:       id,
 		MapAttr:  NewMapAttr(),
-		dbClient: db.GetOrNewDbClient(DbConfigCreator(args...)),
+		dbClient: db.GetOrNewDbClient(DbConfigCreator),
 	}
 }
 
@@ -79,8 +79,8 @@ func (a *AttrMgr) GetAttrID() interface{} {
 	return a.id
 }
 
-func LoadAll(attrName string, args ...interface{}) ([]*AttrMgr, error) {
-	datas, err := db.GetOrNewDbClient(DbConfigCreator(args...)).LoadAll(attrName)
+func LoadAll(attrName string) ([]*AttrMgr, error) {
+	datas, err := db.GetOrNewDbClient(DbConfigCreator).LoadAll(attrName)
 	if err != nil {
 		return nil, err
 	}
@@ -95,8 +95,8 @@ func LoadAll(attrName string, args ...interface{}) ([]*AttrMgr, error) {
 	return attrs, nil
 }
 
-func ForEach(attrName string, callback func(*AttrMgr), args ...interface{}) {
-	db.GetOrNewDbClient(DbConfigCreator(args...)).ForEach(attrName, func(attrID interface{}, data map[string]interface{}) {
+func ForEach(attrName string, callback func(*AttrMgr)) {
+	db.GetOrNewDbClient(DbConfigCreator).ForEach(attrName, func(attrID interface{}, data map[string]interface{}) {
 		a := NewAttrMgr(attrName, attrID)
 		a.AssignMap(data)
 		a.SetDirty(false)
@@ -104,12 +104,7 @@ func ForEach(attrName string, callback func(*AttrMgr), args ...interface{}) {
 	})
 }
 
-func Start(iDb db.IDbConfig) {
-	DbConfigCreator = func(args ...interface{}) db.IDbConfig {
-		return iDb
-	}
-}
-
-func Stop() {
-	db.Shutdown()
+func Initialize(g *group.Group, opfs ...db.OpFn) {
+	db.Initialize(g)
+	DbConfigCreator = db.IDbConfigCreator(opfs...)
 }
